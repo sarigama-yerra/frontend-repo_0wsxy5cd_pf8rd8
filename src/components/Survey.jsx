@@ -8,12 +8,12 @@ function Progress({ current, total }) {
   const pct = Math.round(((current + 1) / total) * 100);
   return (
     <div className="w-full mb-6">
-      <div className="flex justify-between mb-2 text-sm text-blue-200/80">
+      <div className="flex justify-between mb-2 text-sm text-neutral-500">
         <span>Question {current + 1} of {total}</span>
         <span>{pct}%</span>
       </div>
-      <div className="w-full h-2 bg-slate-700/60 rounded-full overflow-hidden">
-        <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-400" style={{ width: `${pct}%` }} />
+      <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+        <div className="h-full bg-neutral-800" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );
@@ -24,15 +24,15 @@ function AdCard() {
     <div className="mt-8">
       <HandcraftedFrame title="Sponsored">
         <div className="flex items-center gap-4">
-          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&q=80&auto=format&fit=crop" alt="ad" className="w-24 h-24 rounded-xl object-cover" />
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&q=80&auto=format&fit=crop" alt="ad" className="w-24 h-24 rounded-2xl object-cover shadow" />
           <div>
-            <h3 className="text-white font-semibold">Grab exclusive deals today</h3>
-            <p className="text-blue-200/80 text-sm">Limited-time offer on gadgets, courses, and travel packages.</p>
-            <a href="#" className="inline-block mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm hover:opacity-90 transition">Learn More</a>
+            <h3 className="text-neutral-900 font-semibold">Grab exclusive deals today</h3>
+            <p className="text-neutral-600 text-sm">Limited-time offer on gadgets, courses, and travel packages.</p>
+            <a href="#" className="soft-btn primary inline-block mt-3 text-sm">Learn More</a>
           </div>
         </div>
       </HandcraftedFrame>
-      <div className="mt-4 p-3 rounded-xl border border-blue-500/20 bg-slate-800/40">
+      <div className="mt-4 p-3 rounded-2xl border border-neutral-200 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] inner-shadow">
         <AdSenseBlock slot="1234567890" />
       </div>
     </div>
@@ -93,13 +93,13 @@ export default function Survey() {
 
   if (error) {
     return (
-      <div className="text-center text-red-300">{error}</div>
+      <div className="text-center text-red-500">{error}</div>
     );
   }
 
   if (!survey) {
     return (
-      <div className="text-center text-blue-200">Loading survey...</div>
+      <div className="text-center text-neutral-500">Loading survey...</div>
     );
   }
 
@@ -107,8 +107,8 @@ export default function Survey() {
     return (
       <div>
         <HandcraftedFrame title="Thanks!">
-          <h2 className="text-2xl font-bold text-white mb-2">Thanks for completing the survey!</h2>
-          <p className="text-blue-200/80">We appreciate your time. Check out these offers while we process your results.</p>
+          <h2 className="text-2xl font-bold text-neutral-900 mb-2">Thanks for completing the survey!</h2>
+          <p className="text-neutral-600">We appreciate your time. Check out these offers while we process your results.</p>
         </HandcraftedFrame>
         <AdCard />
       </div>
@@ -117,13 +117,13 @@ export default function Survey() {
 
   return (
     <HandcraftedFrame title={survey.title}>
-      <p className="text-blue-200/80 mb-6">{survey.description}</p>
+      <p className="text-neutral-600 mb-6">{survey.description}</p>
 
       <Progress current={idx} total={total} />
 
       <div className="mb-6">
-        <div className="text-blue-300 text-sm uppercase tracking-wider mb-1">{currentQ?.topic}</div>
-        <div className="text-white text-lg mb-4">{currentQ?.text}</div>
+        <div className="text-neutral-500 text-xs uppercase tracking-wider mb-1">{currentQ?.topic}</div>
+        <div className="text-neutral-900 text-lg mb-4">{currentQ?.text}</div>
 
         {currentQ?.type === "scale" && (
           <div className="flex items-center gap-2">
@@ -131,7 +131,7 @@ export default function Survey() {
               <button
                 key={n}
                 onClick={() => setAnswer(currentQ.id, n)}
-                className={`px-3 py-2 rounded-lg border ${answers[currentQ.id] === n ? 'bg-blue-600 text-white border-blue-400' : 'bg-slate-700/50 text-blue-200 border-blue-500/20'} hover:border-blue-400 transition`}
+                className={`soft-btn ${answers[currentQ.id] === n ? 'border-neutral-400' : ''}`}
               >{n}</button>
             ))}
           </div>
@@ -143,7 +143,7 @@ export default function Survey() {
               <button
                 key={opt}
                 onClick={() => setAnswer(currentQ.id, opt)}
-                className={`text-left px-4 py-2 rounded-lg border ${answers[currentQ.id] === opt ? 'bg-blue-600 text-white border-blue-400' : 'bg-slate-700/50 text-blue-200 border-blue-500/20'} hover:border-blue-400 transition`}
+                className={`soft-btn text-left ${answers[currentQ.id] === opt ? 'border-neutral-400' : ''}`}
               >{opt}</button>
             ))}
           </div>
@@ -152,7 +152,7 @@ export default function Survey() {
         {currentQ?.type === "text" && (
           <textarea
             rows={4}
-            className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-blue-500/20 text-blue-100 placeholder-blue-300/40 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+            className="soft-input"
             placeholder="Type your answer..."
             value={answers[currentQ.id] || ""}
             onChange={(e) => setAnswer(currentQ.id, e.target.value)}
@@ -161,11 +161,11 @@ export default function Survey() {
       </div>
 
       <div className="flex items-center justify-between">
-        <button onClick={back} disabled={idx === 0} className="px-4 py-2 rounded-lg border border-blue-500/20 text-blue-200 hover:border-blue-400 disabled:opacity-40">Back</button>
+        <button onClick={back} disabled={idx === 0} className="soft-btn disabled:opacity-40">Back</button>
         {idx < total - 1 ? (
-          <button onClick={next} className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:opacity-90">Next</button>
+          <button onClick={next} className="soft-btn primary">Next</button>
         ) : (
-          <button onClick={submit} className="px-4 py-2 rounded-lg bg-gradient-to-r from-green-600 to-emerald-500 text-white hover:opacity-90">Submit</button>
+          <button onClick={submit} className="soft-btn success">Submit</button>
         )}
       </div>
     </HandcraftedFrame>
