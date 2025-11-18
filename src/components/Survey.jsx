@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import AdSenseBlock from "./AdSenseBlock";
+import HandcraftedFrame from "./HandcraftedFrame";
 
 const API = import.meta.env.VITE_BACKEND_URL;
 
@@ -19,15 +21,19 @@ function Progress({ current, total }) {
 
 function AdCard() {
   return (
-    <div className="mt-8 p-6 rounded-2xl border border-blue-500/20 bg-slate-800/50 backdrop-blur shadow-xl">
-      <div className="text-blue-200 text-sm mb-2">Sponsored</div>
-      <div className="flex items-center gap-4">
-        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&q=80&auto=format&fit=crop" alt="ad" className="w-24 h-24 rounded-xl object-cover" />
-        <div>
-          <h3 className="text-white font-semibold">Grab exclusive deals today</h3>
-          <p className="text-blue-200/80 text-sm">Limited-time offer on gadgets, courses, and travel packages.</p>
-          <a href="#" className="inline-block mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm hover:opacity-90 transition">Learn More</a>
+    <div className="mt-8">
+      <HandcraftedFrame title="Sponsored">
+        <div className="flex items-center gap-4">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&q=80&auto=format&fit=crop" alt="ad" className="w-24 h-24 rounded-xl object-cover" />
+          <div>
+            <h3 className="text-white font-semibold">Grab exclusive deals today</h3>
+            <p className="text-blue-200/80 text-sm">Limited-time offer on gadgets, courses, and travel packages.</p>
+            <a href="#" className="inline-block mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm hover:opacity-90 transition">Learn More</a>
+          </div>
         </div>
+      </HandcraftedFrame>
+      <div className="mt-4 p-3 rounded-xl border border-blue-500/20 bg-slate-800/40">
+        <AdSenseBlock slot="1234567890" />
       </div>
     </div>
   );
@@ -100,18 +106,17 @@ export default function Survey() {
   if (submitted) {
     return (
       <div>
-        <div className="p-8 rounded-2xl border border-blue-500/20 bg-slate-800/50 backdrop-blur shadow-xl">
+        <HandcraftedFrame title="Thanks!">
           <h2 className="text-2xl font-bold text-white mb-2">Thanks for completing the survey!</h2>
-          <p className="text-blue-200/80">We appreciate your time. Check out this offer while we process your results.</p>
-        </div>
+          <p className="text-blue-200/80">We appreciate your time. Check out these offers while we process your results.</p>
+        </HandcraftedFrame>
         <AdCard />
       </div>
     );
   }
 
   return (
-    <div className="p-6 rounded-2xl border border-blue-500/20 bg-slate-800/50 backdrop-blur shadow-xl">
-      <h2 className="text-2xl font-bold text-white mb-1">{survey.title}</h2>
+    <HandcraftedFrame title={survey.title}>
       <p className="text-blue-200/80 mb-6">{survey.description}</p>
 
       <Progress current={idx} total={total} />
@@ -163,6 +168,6 @@ export default function Survey() {
           <button onClick={submit} className="px-4 py-2 rounded-lg bg-gradient-to-r from-green-600 to-emerald-500 text-white hover:opacity-90">Submit</button>
         )}
       </div>
-    </div>
+    </HandcraftedFrame>
   );
 }
